@@ -1,0 +1,37 @@
+name: Auto-update client
+
+on:
+  schedule:
+    - cron: '0 0 * * *'
+  workflow_dispatch:
+
+jobs:
+  build:
+    if: ${{ github.ref == 'refs/heads/main' }}
+    permissions:
+      contents: write
+    concurrency:
+      group: ${{ github.workflow }}
+      cancel-in-progress: true
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+      - name: Setup Java
+        uses: actions/setup-java@v4
+        with:
+          distribution: 'temurin'
+          java-version: '21'
+      - name: Download Client
+        run: |
+            cp -rf ${{ github.workspace }}/setup.sh ${{ runner.temp }}/
+            cp -rf ${{ github.workspace }}/templates ${{ runner.temp }}/
+            cd ${{ runner.temp }}
+            bash ./setup.sh
+      - name: Push Changes
+        run: |
+            git config --global user.name "github-actions[bot]"
+            git config --global user.email "41898282+github-actions[bot]@users.noreply.github.com"
+            git add .
+            git commit -m "update eaglercraft(x)"
+            git push https://x-access-token:${{ secrets.GITHUB_TOKEN }}@github.com/${{ vars.REPO }}.git || echo No new changes
