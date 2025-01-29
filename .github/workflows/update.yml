@@ -22,10 +22,8 @@ jobs:
         with:
           distribution: 'temurin'
           java-version: '21'
-      - name: Download Client
+      - name: Main Script
         run: |
-            cp -rf ${{ github.workspace }}/setup.sh ./
-            cp -rf ${{ github.workspace }}/templates ./
             bash ./setup.sh
       - name: Push Changes
         run: |
