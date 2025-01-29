@@ -24,13 +24,11 @@ jobs:
           java-version: '21'
       - name: Download Client
         run: |
-            cp -rf ${{ github.workspace }}/setup.sh ${{ runner.temp }}/
-            cp -rf ${{ github.workspace }}/templates ${{ runner.temp }}/
-            cd ${{ runner.temp }}
+            cp -rf ${{ github.workspace }}/setup.sh ./
+            cp -rf ${{ github.workspace }}/templates ./
             bash ./setup.sh
       - name: Push Changes
         run: |
-            cd ${{ runner.temp }}
             git config --global user.name "github-actions[bot]"
             git config --global user.email "41898282+github-actions[bot]@users.noreply.github.com"
             git add .
