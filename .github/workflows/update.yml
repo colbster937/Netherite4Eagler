@@ -1,4 +1,4 @@
-name: Auto-update client
+name: Update client
 
 on:
   schedule:
