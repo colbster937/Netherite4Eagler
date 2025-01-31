@@ -31,4 +31,4 @@ jobs:
             git config --global user.email "41898282+github-actions[bot]@users.noreply.github.com"
             git add .
             git commit -m "update client"
-            git push https://x-access-token:${{ secrets.GITHUB_TOKEN }}@github.com/${{ vars.REPO }}.git || echo No new changes
+            git push https://x-access-token:${{ secrets.GITHUB_TOKEN }}@github.com/${{ github.repository }}.git || echo No new changes
